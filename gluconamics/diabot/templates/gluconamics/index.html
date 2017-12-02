@@ -10,29 +10,32 @@
 
 <h1><i class="fa fa-fw fa-line-chart"></i> My Data (<i class="fa fa-fw fa-user"></i> {{ request.user }} )</h1>
 
-{% if measurements %}
-    <table id="measurements_table"
-            class="table table-striped"
-            data-toggle="table"
-            data-pagination="true"
-            data-search="true"
-            data-show-toggle="true"
-            data-show-columns="true"
-            data-toolbar="#toolbar">
-        <thead>
-        <tr>
-            <!--
-            <th data-sortable="true">measurement</th>
-            <th data-sortable="true">sensor</th>
-            -->
-            <th data-sortable="true">timestamp</th>
-            <th data-sortable="true">glucose [mM]</th>
-            <th data-sortable="true">insulin [pM]</th>
-            <th data-sortable="true">evaluation</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for m in measurements %}
+<div class="row">
+    <div class="col-sm-6">
+
+        {% if measurements %}
+        <table id="measurements_table"
+               class="table table-striped"
+               data-toggle="table"
+               data-pagination="true"
+               data-search="true"
+               data-show-toggle="true"
+               data-show-columns="true"
+               data-toolbar="#toolbar">
+            <thead>
+            <tr>
+                <!--
+                <th data-sortable="true">measurement</th>
+                <th data-sortable="true">sensor</th>
+                -->
+                <th data-sortable="true">timestamp</th>
+                <th data-sortable="true">glucose [mM]</th>
+                <th data-sortable="true">insulin [pM]</th>
+                <th data-sortable="true">evaluation</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for m in measurements %}
             <tr>
                 <!--
                 <td>{{ m.measurement_id }}</td>
@@ -46,15 +49,65 @@
                     {% endif %}
                 </td>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-{% else %}
-    <p>No entries in database.</p>
-{% endif %}
-
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No entries in database.</p>
+        {% endif %}
+    </div>
+    <div class="col-sm-6">
+        <div id="glc_ins_plot" style="width:600px;height:600px;"></div>
+    </div>
+</div>
 {% endblock %}
 
 {% block javascript %}
+{% if measurements %}
+<script>
+    var trace1 = {
+        x: [1, 2, 3, 4],
+        y: [10, 15, 13, 17],
+        mode: 'markers',
+        type: 'scatter',
+        name: 'recent',
+        text: ['A', 'B', 'C', 'D'],
+        marker: {
+            color: '#FFB74D',
+            size: 15
+        }
+    };
+
+    var trace2 = {
+        x: [2],
+        y: [16],
+        mode: 'markers',
+        type: 'scatter',
+        name: 'new',
+        text: ['E'],
+        marker: {
+            color: '#4BA3C7',
+            size: 30,
+        }
+    };
+
+    var data = [trace1, trace2];
+
+    var layout = {
+      xaxis: {
+        title: 'glucose [mM]',
+        showgrid: false,
+        zeroline: false
+      },
+      yaxis: {
+        title: 'insulin [pM]',
+        showline: false,
+          showgrid: false,
+      }
+    };
+
+    Plotly.newPlot('glc_ins_plot', data, layout);
+</script>
+{% endif %}
 {% endblock %}
 
