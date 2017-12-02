@@ -3,3 +3,4 @@
 .idea
 .gitignore
 docs/.ipynb_checkpoints/
+static
