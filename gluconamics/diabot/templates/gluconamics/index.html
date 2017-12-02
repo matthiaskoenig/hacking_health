@@ -1,7 +1,12 @@
 {% extends "gluconamics/base.html" %}
+
+{% block head %}
+<meta http-equiv="refresh" content="2" >
+{% endblock %}
+
 {% block content %}
 
-<h1><i class="fa fa-fw fa-line-chart"></i> My Measurements (<i class="fa fa-fw fa-user"></i> {{ request.user }} )</h1>
+<h1><i class="fa fa-fw fa-line-chart"></i> My Data (<i class="fa fa-fw fa-user"></i> {{ request.user }} )</h1>
 
 {% if measurements %}
     <table id="measurements_table"

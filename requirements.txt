@@ -13,3 +13,4 @@ pandas
 matplotlib>=2.1.0
 plotly>=2.2.1
 jinja2
+ipykernel

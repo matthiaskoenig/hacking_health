@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -15,11 +15,34 @@ from .serializers import MeasurementSerializer, UserSerializer
 ##########################################
 @login_required
 def index_view(request):
-    measurements = Measurement.objects.filter(user=request.user)
+    measurements = Measurement.objects.filter(user=request.user).order_by('-timestamp')
     context = {
         'measurements': measurements,
     }
     return render(request, 'gluconamics/index.html', context)
+
+@login_required
+def users_view(request):
+    """ View the users.
+
+    :param request:
+    :return:
+    """
+    users = User.objects.all()
+    context = {
+        'users': users,
+    }
+    return render(request, 'gluconamics/users.html', context)
+
+@login_required
+def user_view(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    measurements = Measurement.objects.filter(user=user).order_by('-timestamp')
+    context = {
+        'measurements': measurements,
+    }
+    return render(request, 'gluconamics/index.html', context)
+
 
 
 def about_view(request):
@@ -32,6 +55,7 @@ def about_view(request):
 # class MeasurementViewSet(viewsets.ModelViewSet):
 class MeasurementViewSet(mixins.CreateModelMixin,
                   mixins.RetrieveModelMixin,
+                  mixins.ListModelMixin,
                   viewsets.GenericViewSet):
 
     """ Set of measurements for the authenticated user. """
@@ -44,7 +68,7 @@ class MeasurementViewSet(mixins.CreateModelMixin,
         This view should return a list of all measurement for the currently authenticated user.
         """
         user = self.request.user
-        return Measurement.objects.filter(user=user)
+        return Measurement.objects.filter(user=user).order_by('-timestamp')
 
     def perform_create(self, serializer):
         # automatically set the user on create
@@ -56,6 +80,7 @@ class MeasurementViewSet(mixins.CreateModelMixin,
 class UserViewSet(mixins.CreateModelMixin,
                   mixins.RetrieveModelMixin,
                   mixins.UpdateModelMixin,
+                  mixins.ListModelMixin,
                   viewsets.GenericViewSet):
     """ REST users.
 

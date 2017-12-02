@@ -7,5 +7,9 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index_view, name='index'),
+
+    url(r'^users/$', views.users_view, name='users'),
+    url(r'^users/(?P<user_id>[0-9]+)/$', views.user_view, name='user'),
+
     url(r'^$', views.about_view, name='about'),
 ]

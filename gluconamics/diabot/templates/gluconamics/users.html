@@ -1,0 +1,46 @@
+{% extends "gluconamics/base.html" %}
+{% block content %}
+
+<h1><i class="fa fa-fw fa-users"></i> Users</h1>
+
+{% if users %}
+    <table id="measurements_table"
+            class="table table-striped"
+            data-toggle="table"
+            data-pagination="true"
+            data-search="true"
+            data-show-toggle="true"
+            data-show-columns="true"
+            data-toolbar="#toolbar">
+        <thead>
+        <tr>
+            <!--
+            <th data-sortable="true">measurement</th>
+            <th data-sortable="true">sensor</th>
+            -->
+            <th data-sortable="true">username</th>
+            <th data-sortable="true">first name</th>
+            <th data-sortable="true">last name</th>
+            <th data-sortable="true">email</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td><i class="fa fa-fw fa-user"></i> <a href="{{ url('user', args=[user.id]) }}">{{ user.username }}</a></td>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.last_name }}</td>
+                <td>{{ user.email }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No entries in database.</p>
+{% endif %}
+
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}
+

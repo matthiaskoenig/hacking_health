@@ -9,7 +9,7 @@ import numpy as np
 
 FILE_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)))
 PROJECT_DIR = os.path.join(FILE_DIR, "../gluconamics/")
-DEFAULT_USER_PASSWORD = 'diabot'
+DEFAULT_USER_PASSWORD = 'test'
 
 # setup django (add current path to sys.path)
 path = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../'))
@@ -39,6 +39,7 @@ user_defs = [
     UserDef("person_healthy", "Person", "Normal", "normal@diabot.de", "normal"),
     UserDef("person_impaired", "Person", "IGT", "igt@diabot.de", "igt"),
     UserDef("person_t2dm", "Person", "T2DM", "t2dm@diabot.de", "t2dm"),
+    UserDef("test_user", "Test", "user", "test@diabot.de", "normal"),
 ]
 ################################################################################################################
 
@@ -49,7 +50,9 @@ def create_superuser():
     except ObjectDoesNotExist:
         # User.objects.create_superuser('mkoenig', 'konigmatt@googlemail.com', os.environ['DJANGO_ADMIN_PASSWORD'])
         user = User.objects.create_superuser('mkoenig', 'konigmatt@googlemail.com', DEFAULT_USER_PASSWORD)
-        print(user)
+        user.last_name = "Matthias"
+        user.first_name = "Koenig"
+        user.save()
 
 
 def create_users(user_defs):
