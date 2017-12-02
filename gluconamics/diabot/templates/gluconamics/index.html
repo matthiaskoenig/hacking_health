@@ -1,7 +1,7 @@
 {% extends "gluconamics/base.html" %}
 {% block content %}
 
-<h1><i class="fa fa-fw fa-braille"></i>My Measurements (<i class="fa fa-fw fa-user"></i> {{ request.user }} )
+<h1><i class="fa fa-fw fa-line-chart"></i> My Measurements (<i class="fa fa-fw fa-user"></i> {{ request.user }} )
 </h1>
 {% for m in measurements %}
 {{ m }}<br />

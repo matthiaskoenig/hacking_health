@@ -8,12 +8,11 @@
     <title>Diabot</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="{{ static ('gluconamics/css/custom.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ static ('gluconamics/css/basic.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ static ('gluconamics/css/bootstrap-table.css') }}"/>
-    <link rel="stylesheet" type="text/css" href="{{ static ('gluconamics/css/bootstrap-datepicker3.min.css') }}"/>
-
     <link rel="stylesheet" type="text/css" href="{{ static('gluconamics/css/bootstrap.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ static('gluconamics/js/datatables.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ static('gluconamics/font-awesome-4.7.0/css/font-awesome.min.css') }}"/>
 
     <script type="text/javascript" src="{{ static('gluconamics/js/jquery-3.2.1.min.js') }}"></script>
     <script type="text/javascript" src="{{ static('gluconamics/js/tether-1.4.0.min.js') }}"></script>
@@ -37,30 +36,14 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="nav navbar-nav" href="{{ url('index')}}">
-                <img style="width:50px" src="{{ static('gluconamics/images/flutype-logo.png')}}" title="FluTypeDB"></a>
+                <li>Diabot</li></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 {% if request.user.is_authenticated %}
-
-                {% endif %}
-                <li class="active">
-                    <a href="{{ url('about') }}" title="Description">
-                        <i class="fa fa-info fa-fw"></i> About</a>
-                </li>
-                {% if request.user.is_superuser %}
-                    <li class="active">
-                        <a href="{{ url("admin:index") }}" target="_blank" title="Admin interface">
-                            <i class="fa fa-user fa-fw"></i> Admin</a>
-                    </li>
-                {% endif %}
-            </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-                {% if request.user.is_authenticated %}
-                    <li class="dropdown active">
+                    <li class="dropdown">
                         <a data-toggle="dropdown" role="button" aria-expanded="false"><i
                                 class="fa fa-fw fa-user"></i> {{ request.user.get_username() }}<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
@@ -76,7 +59,20 @@
                             <i class="fa fa-fw fa-sign-in"></i> Login</a>
                     </li>
                 {% endif %}
-                <li class="active">
+                {% if request.user.is_superuser %}
+                    <li>
+                        <a href="{{ url("admin:index") }}" target="_blank" title="Admin interface">
+                            <i class="fa fa-server fa-fw"></i> Admin</a>
+                    </li>
+                {% endif %}
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="{{ url('about') }}" title="Description">
+                        <i class="fa fa-info fa-fw"></i> About</a>
+                </li>
+                <li>
                     <a href="https://github.com/matthiaskoenig/hacking_health" title="Code on GitHub" target="_blank">
                     <i class="fa fa-fw fa-github"></i> Github</a>
                 </li>
