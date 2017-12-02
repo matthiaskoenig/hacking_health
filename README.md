@@ -6,7 +6,7 @@
 ## Overview
 Implementation of glucose-insulin recommendation engine based on insulin-glucose monitoring in saliva.
 
-[!Hacking Health](./docs/images/hacking_health.jpg)
+<img src="./docs/images/hacking_health.jpg" height="15"/>
 
 http://hacking-health.org/berlin/
 
