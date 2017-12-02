@@ -10,5 +10,8 @@ def index_view(request):
     context = {
         'measurements': measurements,
     }
-    return render(request,
-                  'glucoonamics/index.html', context)
+    return render(request, 'gluconamics/index.html', context)
+
+
+def about_view(request):
+    return render(request, "flutype/about.html", {})

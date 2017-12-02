@@ -76,16 +76,17 @@ def add_measurements_to_database():
     """
     # normal measurements
     Nm = 10
-    user = User.objects.get(username="normal")
-    glc = np.random.rand(10)
-    ins = np.random.rand(10)
-    for k in range(Nm):
-        m = Measurement(user=user,
-                        measurement_id=k,
-                        sensor_batch_id=1,
-                        glucose=glc[k],
-                        insulin=ins[k])
-        m.save()
+    for username in ["normal", "igt", "t2dm"]:
+        user = User.objects.get(username=username)
+        glc = np.random.rand(10)
+        ins = np.random.rand(10)
+        for k in range(Nm):
+            m = Measurement(user=user,
+                            measurement_id=k,
+                            sensor_batch_id=1,
+                            glucose=glc[k],
+                            insulin=ins[k])
+            m.save()
 
 
 if __name__ == "__main__":

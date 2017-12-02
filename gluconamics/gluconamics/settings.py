@@ -53,6 +53,17 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'gluconamics.urls'
 
 TEMPLATES = [
+
+    {
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'DIRS': [os.path.join(BASE_DIR, 'diabot/templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'environment': 'gluconamics.jinja2.environment',
+
+        },
+    },
+
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
@@ -63,9 +74,14 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "django.template.context_processors.i18n",
+                "django.template.context_processors.media",
+                "django.template.context_processors.static",
+                "django.template.context_processors.tz",
             ],
         },
     },
+
 ]
 
 WSGI_APPLICATION = 'gluconamics.wsgi.application'
