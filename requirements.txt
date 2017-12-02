@@ -1,7 +1,11 @@
-numpy
-django
+
+django>=1.11.7
+django-pandas>=0.4.5
+django-choices>=1.6.0
+djangorestframework>=3.7.3
+
 numpy
 pandas
-matplotlib
-plotly
+matplotlib>=2.1.0
+plotly>=2.2.1
 jinja2

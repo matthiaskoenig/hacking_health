@@ -1,13 +1,53 @@
 {% extends "gluconamics/base.html" %}
 {% block content %}
 
-<h1><i class="fa fa-fw fa-line-chart"></i> My Measurements (<i class="fa fa-fw fa-user"></i> {{ request.user }} )
-</h1>
-{% for m in measurements %}
-{{ m }}<br />
-{% endfor %}
+<h1><i class="fa fa-fw fa-line-chart"></i> My Measurements (<i class="fa fa-fw fa-user"></i> {{ request.user }} )</h1>
+
+{% if measurements %}
+    <table id="measurements_table"
+            class="table table-striped"
+            data-toggle="table"
+            data-pagination="true"
+            data-search="true"
+            data-show-toggle="true"
+            data-show-columns="true"
+            data-toolbar="#toolbar">
+        <thead>
+        <tr>
+            <!--
+            <th data-sortable="true">measurement</th>
+            <th data-sortable="true">sensor</th>
+            -->
+            <th data-sortable="true">timestamp</th>
+            <th data-sortable="true">glucose [mM]</th>
+            <th data-sortable="true">insulin [pM]</th>
+            <th data-sortable="true">evaluation</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for m in measurements %}
+            <tr>
+                <!--
+                <td>{{ m.measurement_id }}</td>
+                <td>{{ m.sensor_batch_id }}</td>
+                -->
+                <td>{{ m.timestamp.strftime('%Y-%m-%d %I:%M') }}</td>
+                <td>{{ '%.3f' % m.glucose }}</td>
+                <td>{{ '%.3f' %m.insulin }}</td>
+                <td>{% if m.evaluation=="SUCCESS" %}
+                    <span class="label label-success"><i class="fa fa-fw fa-check-circle"></i></span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No entries in database.</p>
+{% endif %}
 
 {% endblock %}
 
 {% block javascript %}
 {% endblock %}
+

@@ -2,7 +2,7 @@ from django.db import models
 
 from django.contrib.auth.models import User
 # Create your models here.
-
+from djchoices import DjangoChoices, ChoiceItem
 
 # ===============================================================================
 # Models
@@ -19,3 +19,8 @@ class Measurement(models.Model):
 
     class Meta:
         unique_together = ('user', 'measurement_id')
+
+
+    @property
+    def evaluation(self):
+        return "SUCCESS"
