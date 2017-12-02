@@ -16,6 +16,7 @@ schema_view = get_swagger_view(title='API')  # Swagger
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet, base_name='user')
 router.register(r'measurements', views.MeasurementViewSet, base_name='measurement')
+router.register(r'recommendations', views.RecommendationViewSet, base_name='recommendation')
 
 urlpatterns = [
     url(r'^$', schema_view, name="api"),

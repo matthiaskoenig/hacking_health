@@ -3,10 +3,8 @@ Model serialization used in the django-rest-framework.
 """
 
 from rest_framework import serializers
-from .models import Measurement
+from .models import Measurement, Recommendation
 from django.contrib.auth.models import User
-
-# TODO: querying a user should get the measurements
 
 
 class MeasurementSerializer(serializers.ModelSerializer):
@@ -25,3 +23,11 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = ['url', 'username', 'first_name', 'last_name', 'email']
+
+
+class RecommendationSerializer(serializers.ModelSerializer):
+    """ Serializing all Recommendations. """
+
+    class Meta:
+        model = Recommendation
+        fields = ['status', 'direction', 'intervention', 'message']

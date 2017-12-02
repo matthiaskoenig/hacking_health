@@ -1,3 +1,6 @@
+"""
+Views.
+"""
 from django.shortcuts import render, get_object_or_404
 
 from django.contrib.auth.decorators import login_required
@@ -8,7 +11,7 @@ from rest_framework.generics import (ListCreateAPIView,RetrieveUpdateDestroyAPIV
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets, mixins
 
-from .serializers import MeasurementSerializer, UserSerializer
+from .serializers import MeasurementSerializer, UserSerializer, RecommendationSerializer
 
 ##########################################
 # Main views
@@ -78,7 +81,7 @@ class MeasurementViewSet(mixins.CreateModelMixin,
 
     def get_queryset(self):
         """
-        This view should return a list of all measurement for the currently authenticated user.
+        This view returns a list of all measurement for the currently authenticated user.
         """
         user = self.request.user
         return Measurement.objects.filter(user=user).order_by('-timestamp')
@@ -95,13 +98,23 @@ class UserViewSet(mixins.CreateModelMixin,
                   mixins.UpdateModelMixin,
                   mixins.ListModelMixin,
                   viewsets.GenericViewSet):
-    """ REST users.
-
-    A viewset for viewing and editing user instances.
-    """
+    """ Set of available users. """
     serializer_class = UserSerializer
     permission_classes = (IsAuthenticated,)
     queryset = User.objects.all()
+    # filter_backends = (filters.DjangoFilterBackend, filters_rest.SearchFilter)
+    # filter_fields = ('is_staff', 'username')
+    # search_fields = ('is_staff', 'username', "email")
+
+
+class RecommendationViewSet(mixins.CreateModelMixin,
+                  mixins.RetrieveModelMixin,
+                  mixins.ListModelMixin,
+                  viewsets.GenericViewSet):
+    """ Set of recommendations. """
+    serializer_class = RecommendationSerializer
+    permission_classes = (IsAuthenticated,)
+    queryset = Recommendation.objects.all()
     # filter_backends = (filters.DjangoFilterBackend, filters_rest.SearchFilter)
     # filter_fields = ('is_staff', 'username')
     # search_fields = ('is_staff', 'username', "email")
