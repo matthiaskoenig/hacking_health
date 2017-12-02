@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Diabot">
+    <meta name="author" content="Matthias Koenig">
+    <link rel="icon" href="{{ static('gluconamics/images/flutype.ico')}}"/>
+    <title>Diabot</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ static ('gluconamics/css/custom.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ static ('gluconamics/css/bootstrap-table.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ static ('gluconamics/css/bootstrap-datepicker3.min.css') }}"/>
+
+    <link rel="stylesheet" type="text/css" href="{{ static('gluconamics/css/bootstrap.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ static('gluconamics/js/datatables.min.css') }}"/>
+
+    <script type="text/javascript" src="{{ static('gluconamics/js/jquery-3.2.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ static('gluconamics/js/tether-1.4.0.min.js') }}"></script>
+    <script type="text/javascript" src="{{ static('gluconamics/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ static('gluconamics/js/datatables-1.10.15.min.js') }}"></script>
+
+    <!-- HEAD -->
+    {% block head %}{% endblock %}
+
+</head>
+<body>
+<nav id="main-navbar" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="nav navbar-nav" href="{{ url('index')}}">
+                <img style="width:50px" src="{{ static('gluconamics/images/flutype-logo.png')}}" title="FluTypeDB"></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                {% if request.user.is_authenticated %}
+
+                {% endif %}
+                <li class="active">
+                    <a href="{{ url('about') }}" title="Description">
+                        <i class="fa fa-info fa-fw"></i> About</a>
+                </li>
+                {% if request.user.is_superuser %}
+                    <li class="active">
+                        <a href="{{ url("admin:index") }}" target="_blank" title="Admin interface">
+                            <i class="fa fa-user fa-fw"></i> Admin</a>
+                    </li>
+                {% endif %}
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.user.is_authenticated %}
+                    <li class="dropdown active">
+                        <a data-toggle="dropdown" role="button" aria-expanded="false"><i
+                                class="fa fa-fw fa-user"></i> {{ request.user.get_username() }}<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ url('logout') }}?next={{ request.path }}"
+                                   title="Log out">
+                                <i class="fa fa-fw fa-sign-out"> </i> Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{{ url('login') }}?next={{ request.path }}" title="Login to get access to the database">
+                            <i class="fa fa-fw fa-sign-in"></i> Login</a>
+                    </li>
+                {% endif %}
+                <li class="active">
+                    <a href="https://github.com/matthiaskoenig/hacking_health" title="Code on GitHub" target="_blank">
+                    <i class="fa fa-fw fa-github"></i> Github</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div id="wrapper">
+    <div id="page-wrapper">
+
+        <div class="container">
+            <!-- CONTENT -->
+            {% block content %}{% endblock %}
+
+            <!-- END CONTENT -->
+        </div>
+
+        <!-- FOOTER -->
+        <div class="row">
+            <div class="col-lg-12">
+                <hr/>
+                <p>&copy; 2017 FluType</p>
+            </div>
+            <!-- END FOOTER -->
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /#page-wrapper -->
+</div>
+<!-- /#wrapper -->
+
+{% block javascript %}{% endblock %}
+</body>
+</html>

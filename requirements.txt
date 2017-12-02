@@ -1,2 +1,6 @@
 numpy
 django
+numpy
+pandas
+matplotlib
+plotly
