@@ -4,9 +4,14 @@
     - put measurement
     - get all measurements
     - get normal ranges (cutoffs)
-    - get evaluation for measurement
-   
-   
-- database 
-    - add tissue
-    - add measurement type
+    - get evaluation for measurement (recommendations)
+
+* Deploy initial version
+
+- Visualization of data for subjects
+- Visualization of normal ranges
+- Evaluation of measurements against normal ranges 
+- Evaluation of measurements against previous measurements
+- Trend of measurements, i.e. in which direction in the phase plane
+
+- Validators for models
