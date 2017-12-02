@@ -1,7 +1,7 @@
 #!/bin/bash
 
 NAME="gluconamics"                              # Name of the application (*)
-DJANGODIR=/var/git/hacking_health                  # Django project directory (*)
+DJANGODIR=/var/git/hacking_health/gluconamics                  # Django project directory (*)
 SOCKFILE=/var/git/hacking_health/run/gunicorn.sock # we will communicate using this unix socket (*)
 USER=mkoenig                                         # the user to run as (*)
 GROUP=mkoenig                                      # the group to run as (*)
