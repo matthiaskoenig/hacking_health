@@ -6,7 +6,7 @@ from .models import Measurement
 
 from rest_framework.generics import (ListCreateAPIView,RetrieveUpdateDestroyAPIView)
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 
 from .serializers import MeasurementSerializer, UserSerializer
 
@@ -29,27 +29,34 @@ def about_view(request):
 ##########################################
 # REST API
 ##########################################
-class MeasurementViewSet(viewsets.ModelViewSet):
-    """ REST archives.
+# class MeasurementViewSet(viewsets.ModelViewSet):
+class MeasurementViewSet(mixins.CreateModelMixin,
+                  mixins.RetrieveModelMixin,
+                  viewsets.GenericViewSet):
 
-    lookup_field defines the url of the detailed view.
-    permission_classes define which users is allowed to do what.
-    """
-    # TODO: filter based on user
-    queryset = Measurement.objects.all()
+    """ Set of measurements for the authenticated user. """
     permission_classes = (IsAuthenticated, )
     serializer_class = MeasurementSerializer
     lookup_field = 'measurement_id'
-    # filter_backends = (filters.DjangoFilterBackend, filters_rest.SearchFilter)
-    # filter_fields = ('name', 'task_id', 'tags', 'created')
-    # search_fields = ('name', 'tags__name', 'created')
+
+    def get_queryset(self):
+        """
+        This view should return a list of all measurement for the currently authenticated user.
+        """
+        user = self.request.user
+        return Measurement.objects.filter(user=user)
 
     def perform_create(self, serializer):
         # automatically set the user on create
         serializer.save(user=self.request.user)
 
 
-class UserViewSet(viewsets.ModelViewSet):
+
+# class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(mixins.CreateModelMixin,
+                  mixins.RetrieveModelMixin,
+                  mixins.UpdateModelMixin,
+                  viewsets.GenericViewSet):
     """ REST users.
 
     A viewset for viewing and editing user instances.

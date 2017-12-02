@@ -2,7 +2,9 @@
 * REST API
 - PUT data and GET data
     - put measurement
-    - get all measurements
+    - get all measurements for user
+    - jupyter notebook
+    
     - get normal ranges (cutoffs)
     - get evaluation for measurement (recommendations)
 
