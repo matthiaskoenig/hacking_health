@@ -25,7 +25,7 @@ SECRET_KEY = '^7r9z!xy82$tg$wnds8!68((_k*i&bm-2h+c_c%acol=l+h*j&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost', 'gluconamics.de', 'www.gluconamics.de']
 
 
 # Application definition
