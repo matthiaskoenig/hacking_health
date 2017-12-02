@@ -1,0 +1,40 @@
+<!--
+Definition of reusable macro function in templates
+-->
+
+<!-- Status -->
+{% macro status(status) %}
+{% if status == "good" %}
+    <span class="label label-success">{{ status }}</span>
+{% elif status == "normal" %}
+    <span class="label label-info">{{ status }}</span>
+{% elif status == "bad" %}
+    <span class="label label-danger">{{ status }}</span>
+{% endif %}
+{% endmacro %}
+
+<!-- Direction -->
+{% macro direction(value) %}
+{% if value == "improving" %}
+    <span class="label label-success">{{ value }}</span>
+{% elif value == "constant" %}
+    <span class="label label-info">{{ value }}</span>
+{% elif value == "worsening" %}
+    <span class="label label-danger">{{ value }}</span>
+{% endif %}
+{% endmacro %}
+
+<!-- Intervention -->
+{% macro intervention(value) %}
+{% if value == "misc" %}
+<i class="fa fa-fw fa-asterisk"></i>
+{% elif value == "diet" %}
+<i class="fa fa-fw fa-shopping-cart"></i>
+{% elif value == "exercise" %}
+<i class="fa fa-fw fa-bicycle"></i>
+{% elif value == "medical" %}
+<i class="fa fa-fw fa-stethoscope"></i>
+{% endif %}
+{{ value }}
+{% endmacro %}
+

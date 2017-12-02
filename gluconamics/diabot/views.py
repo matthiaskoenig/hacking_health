@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Measurement
+from .models import Measurement, Recommendation
 
 from rest_framework.generics import (ListCreateAPIView,RetrieveUpdateDestroyAPIView)
 from rest_framework.permissions import IsAuthenticated
@@ -20,6 +20,19 @@ def index_view(request):
         'measurements': measurements,
     }
     return render(request, 'gluconamics/index.html', context)
+
+@login_required
+def recommendations_view(request):
+    """ View the recommendations.
+
+    :param request:
+    :return:
+    """
+    recommendations = Recommendation.objects.all()
+    context = {
+        'recommendations': recommendations,
+    }
+    return render(request, 'gluconamics/recommendations.html', context)
 
 @login_required
 def users_view(request):

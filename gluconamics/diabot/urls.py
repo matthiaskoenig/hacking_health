@@ -10,6 +10,7 @@ urlpatterns = [
 
     url(r'^users/$', views.users_view, name='users'),
     url(r'^users/(?P<user_id>[0-9]+)/$', views.user_view, name='user'),
+    url(r'^recommendations/$', views.recommendations_view, name='recommendations'),
 
     url(r'^$', views.about_view, name='about'),
 ]

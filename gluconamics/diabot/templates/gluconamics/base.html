@@ -68,6 +68,9 @@
                     <li>
                         <a href="{{ url('users') }}" title="Users"><i class="fa fa-fw fa-users"></i> Users</a>
                     </li>
+                    <li>
+                        <a href="{{ url('recommendations') }}" title="Recommendations"><i class="fa fa-fw fa-comments"></i> Recommendations</a>
+                    </li>
                 {% else %}
                     <li>
                         <a href="{{ url('login') }}?next={{ request.path }}" title="Login to get access to the database">
