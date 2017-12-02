@@ -26,8 +26,9 @@ import django
 django.setup()
 
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from collections import namedtuple
-from gluconamics.diabot.models import Measurement
+from diabot.models import Measurement
 
 
 ################################################################################################################
@@ -39,30 +40,33 @@ user_defs = [
 ]
 ################################################################################################################
 
+
 def create_superuser():
-    user = User.objects.get(username="mkoenig")
-    if not user:
+    try:
+        user = User.objects.get(username="mkoenig")
+    except ObjectDoesNotExist:
         # User.objects.create_superuser('mkoenig', 'konigmatt@googlemail.com', os.environ['DJANGO_ADMIN_PASSWORD'])
-        User.objects.create_superuser('mkoenig', 'konigmatt@googlemail.com', DEFAULT_USER_PASSWORD)
+        user = User.objects.create_superuser('mkoenig', 'konigmatt@googlemail.com', DEFAULT_USER_PASSWORD)
+        print(user)
 
 
-def create_users(user_defs, delete_all=True):
+def create_users(user_defs):
     """ Create users in database from user definitions.
 
     :param delete_all: deletes all existing users
     :return:
     """
-    # deletes all users
-    if delete_all:
-        User.objects.all().delete()
-
     # adds user to database
     for user_def in user_defs:
-        user = User.objects.create_user(username=user_def.username, email=user_def.email,
-                                        password=DEFAULT_USER_PASSWORD)
-        user.last_name = user_def.last_name
-        user.first_name = user_def.first_name
-        user.save()
+        try:
+            user = User.objects.get(username=user_def.username)
+        except ObjectDoesNotExist:
+            user = User.objects.create_user(username=user_def.username, email=user_def.email,
+                                            password=DEFAULT_USER_PASSWORD)
+            user.last_name = user_def.last_name
+            user.first_name = user_def.first_name
+            user.save()
+            print(user)
 
 
 def add_measurements_to_database():

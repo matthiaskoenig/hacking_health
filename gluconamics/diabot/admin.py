@@ -5,4 +5,6 @@ from .models import Measurement
 
 @admin.register(Measurement)
 class MeasurementAdmin(admin.ModelAdmin):
-    fields = ('user', 'timestamp', 'measurement_id', 'sensor_batch_id', 'glucose', 'insulin')
+    fields = ('user', 'measurement_id', 'sensor_batch_id', 'glucose', 'insulin')
+    list_display = ('user', 'measurement_id', 'sensor_batch_id', 'glucose', 'insulin')
+    list_filter = ('user', )

@@ -14,7 +14,7 @@ rm -rf diabot/migrations/*
 
 # clean setup
 python manage.py makemigrations
-python manage.py makemigrations combine
+python manage.py makemigrations diabot
 python manage.py migrate
 
 
