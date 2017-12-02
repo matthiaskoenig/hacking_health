@@ -25,7 +25,8 @@ SECRET_KEY = '^7r9z!xy82$tg$wnds8!68((_k*i&bm-2h+c_c%acol=l+h*j&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost', 'gluconamics.de', 'www.gluconamics.de']
+
 
 
 # Application definition
@@ -154,3 +155,22 @@ REST_FRAMEWORK = {
     #                             'django_filters.rest_framework.DjangoFilterBackend',
     #                            )
 }
+
+######################################################################################
+# Overwrite settings for the deployment
+######################################################################################
+# The deploy_settings.py is only on the server and not tracked via
+# the version control !
+######################################################################################
+try:
+    from gluconamics.deploy_settings import *
+
+    print("*" * 40)
+    print("RUNNING IN DEPLOYMENT")
+    print("*" * 40)
+except ImportError as e:
+    print("*" * 40)
+    print("RUNNING IN DEVELOP")
+    print("*" * 40)
+
+

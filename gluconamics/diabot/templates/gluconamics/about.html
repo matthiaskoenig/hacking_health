@@ -1,4 +1,49 @@
 {% extends "gluconamics/base.html" %}
 {% block content %}
-   <h1>About Diabot</h1>
+
+<div class="row">
+    <div class="col-xs-6 col-md-4">
+        <img src="{{ static('gluconamics/images/dbt.png')}}" width="250"/>
+    </div>
+    <div class="col-xs-6 col-md-6">
+        <h2>The Challenge</h2>
+        Painless Self monitoring of blood glucose.<br/>
+        <a href="https://healthhackathon17-berlin.sparkboard.com/project/5a11fd574f106f04003c702f">https://healthhackathon17-berlin.sparkboard.com/project/5a11fd574f106f04003c702f</a>
+        <br/><br/><br/><br/>
+        <a href="http://hacking-health.org/berlin/"></a><img src="{{ static('gluconamics/images/hacking_health.jpg')}}"
+                                                             height="200">
+    </div>
+</div>
+
+
+<div class="row">
+    <h2>The Team</h2>
+    <div class="col-xs-4 col-md-2">
+        <span class="thumbnail"><img src="{{ static('gluconamics/images/arunakiry.jpg')}}" width="100"/><br/>
+        <b>Arunakiry Natarajan</b>
+        </span>
+    </div>
+
+    <div class="col-xs-4 col-md-2">
+        <span class="thumbnail"><img src="{{ static('gluconamics/images/camila.jpg')}}" width="100"/><br/>
+        <b>Camila Satie</b>
+        </span>
+    </div>
+    <div class="col-xs-4 col-md-2">
+        <span class="thumbnail"><img src="{{ static('gluconamics/images/kajetan.png')}}" width="100"/><br/>
+        <b>Kajetan Maliszeski</b>
+        </span>
+    </div>
+    <div class="col-xs-4 col-md-2">
+        <span class="thumbnail"><img src="{{ static('gluconamics/images/vaibhav.png')}}" width="100"/><br/>
+        <b>Vaibhav Bhatia</b>
+        </span>
+    </div>
+    <div class="col-xs-4 col-md-2">
+        <span class="thumbnail"><img src="{{ static('gluconamics/images/matthias.png')}}" width="100"/><br/>
+        <b>Matthias König</b>
+        </span>
+    </div>
+</div>
+
 {% endblock %}

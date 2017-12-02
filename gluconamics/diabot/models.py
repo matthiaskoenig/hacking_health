@@ -1,5 +1,6 @@
 from django.db import models
 
+from collections import namedtuple
 from django.contrib.auth.models import User
 # Create your models here.
 from djchoices import DjangoChoices, ChoiceItem
@@ -40,3 +41,78 @@ class Measurement(models.Model):
     @property
     def evaluation(self):
         return "SUCCESS"
+
+
+class StatusChoices(DjangoChoices):
+    GOOD = ChoiceItem("good")
+    NORMAL = ChoiceItem("normal")
+    BAD = ChoiceItem("bad")
+    DANGER = ChoiceItem("danger")
+
+
+class DirectionChoices(DjangoChoices):
+    CONSTANT = ChoiceItem("constant")
+    IMPROVING = ChoiceItem("improving")
+    WORSENING = ChoiceItem("worsening")
+
+
+class InterventionChoices(DjangoChoices):
+    DIET = ChoiceItem("diet")
+    MEDICAL = ChoiceItem("medical")
+    EXERCISE = ChoiceItem("exercise")
+    MISC = ChoiceItem("misc")
+
+
+class Recommendation(models.Model):
+    """ Recommendation """
+    recommendation_id = models.TextField()
+    status = models.TextField(StatusChoices)
+    direction = models.TextField(DirectionChoices)
+    intervention = models.TextField(InterventionChoices)
+    message = models.TextField()
+
+    def __str__(self):
+        return '<Recommendation (%s): %s %s>' % (self.intervention, self.status, self.direction)
+
+
+################################################################################################################
+'''
+Definition of recommendations.
+'''
+RecDef = namedtuple('RecDef', ['status', 'direction', 'intervention', 'message'])
+
+rec_defs = [
+    # GOOD
+    RecDef(status=StatusChoices.GOOD, direction=DirectionChoices.CONSTANT, intervention=InterventionChoices.MISC,
+           message="Hey mate, you are absolutely great. The levels are fine. Your diet and workout did wonders for your sugar levels. Keep it up buddy."),
+    RecDef(status=StatusChoices.GOOD, direction=DirectionChoices.IMPROVING, intervention=InterventionChoices.MISC,
+           message="Hey mate, you are absolutely great. The levels are fine. Your diet and workout did wonders for your sugar levels. You are top of the class."),
+    RecDef(status=StatusChoices.GOOD, direction=DirectionChoices.WORSENING, intervention=InterventionChoices.MISC,
+           message="Your values decreased from the last measurement. Why not try to take the steps instead of elevators the next weeks?"),
+
+    # NORMAL
+    RecDef(status=StatusChoices.NORMAL, direction=DirectionChoices.CONSTANT, intervention=InterventionChoices.MISC,
+           message="Your sugar levels are under control. Keep it up buddy."),
+    RecDef(status=StatusChoices.NORMAL, direction=DirectionChoices.IMPROVING, intervention=InterventionChoices.MISC,
+           message="Your levels improved. Everything is in the normal range. You are on the right track"),
+    RecDef(status=StatusChoices.NORMAL, direction=DirectionChoices.WORSENING, intervention=InterventionChoices.DIET,
+           message="Your levels decreased. How about cutting down on the sugar?"),
+
+    # BAD
+    RecDef(status=StatusChoices.BAD, direction=DirectionChoices.CONSTANT, intervention=InterventionChoices.EXERCISE,
+           message="Nothing changed. We could try something new. How about taking a walk?"),
+    RecDef(status=StatusChoices.BAD, direction=DirectionChoices.IMPROVING, intervention=InterventionChoices.EXERCISE,
+           message="Hey mate, i think you skipped your medication/exercise. Let's collect some karma and skip sodas for the week."),
+    RecDef(status=StatusChoices.BAD, direction=DirectionChoices.WORSENING, intervention=InterventionChoices.EXERCISE,
+           message="Hey mate, i think you skipped your medication/exercise. Time to take some action. How about trying those new sneakers in the wild."),
+
+    # DANGER
+    RecDef(status=StatusChoices.BAD, direction=DirectionChoices.CONSTANT, intervention=InterventionChoices.MEDICAL,
+           message="Your values are critical. Please talk to a medical professional."),
+    RecDef(status=StatusChoices.BAD, direction=DirectionChoices.IMPROVING, intervention=InterventionChoices.MEDICAL,
+           message="Your values are critical. Please talk to a medical professional."),
+    RecDef(status=StatusChoices.BAD, direction=DirectionChoices.WORSENING, intervention=InterventionChoices.MEDICAL,
+           message="Your values are critical. Please talk to a medical professional."),
+
+]
+################################################################################################################

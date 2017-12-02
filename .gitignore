@@ -1,5 +1,5 @@
 *.pyc
 *~
 .idea
-.gitignore
 docs/.ipynb_checkpoints/
+gluconamics/deploy_settings.py

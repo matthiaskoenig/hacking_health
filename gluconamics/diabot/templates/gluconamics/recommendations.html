@@ -1,0 +1,49 @@
+{% import 'gluconamics/macros.html' as macros %}
+
+{% extends "gluconamics/base.html" %}
+{% block content %}
+
+<h1><i class="fa fa-fw fa-comments"></i> Recommendations</h1>
+
+{% if recommendations %}
+    <table id="measurements_table"
+            class="table table-striped"
+            data-toggle="table"
+            data-pagination="true"
+            data-search="true"
+            data-show-toggle="true"
+            data-show-columns="true"
+            data-toolbar="#toolbar"
+            data-page-size="25">
+        <thead>
+        <tr>
+            <!--
+            <th data-sortable="true">measurement</th>
+            <th data-sortable="true">sensor</th>
+            -->
+            <th data-sortable="true">status</th>
+            <th data-sortable="true">direction</th>
+            <th data-sortable="true">intervention</th>
+            <th data-sortable="true">message</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for r in recommendations %}
+            <tr>
+                <td>{{ macros.status(r.status) }}</td>
+                <td>{{ macros.direction(r.direction) }}</td>
+                <td>{{ macros.intervention(r.intervention) }}</td>
+                <td>{{ r.message }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No entries in database.</p>
+{% endif %}
+
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}
+

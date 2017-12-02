@@ -1,2 +1,1 @@
-VERSION = "0.1.0"
-NAME = "Diabonet"
+from .__version import __version__, NAME

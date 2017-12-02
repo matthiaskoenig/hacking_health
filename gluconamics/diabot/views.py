@@ -1,14 +1,17 @@
+"""
+Views.
+"""
 from django.shortcuts import render, get_object_or_404
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Measurement
+from .models import Measurement, Recommendation
 
 from rest_framework.generics import (ListCreateAPIView,RetrieveUpdateDestroyAPIView)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets, mixins
 
-from .serializers import MeasurementSerializer, UserSerializer
+from .serializers import MeasurementSerializer, UserSerializer, RecommendationSerializer
 
 ##########################################
 # Main views
@@ -20,6 +23,19 @@ def index_view(request):
         'measurements': measurements,
     }
     return render(request, 'gluconamics/index.html', context)
+
+@login_required
+def recommendations_view(request):
+    """ View the recommendations.
+
+    :param request:
+    :return:
+    """
+    recommendations = Recommendation.objects.all()
+    context = {
+        'recommendations': recommendations,
+    }
+    return render(request, 'gluconamics/recommendations.html', context)
 
 @login_required
 def users_view(request):
@@ -65,7 +81,7 @@ class MeasurementViewSet(mixins.CreateModelMixin,
 
     def get_queryset(self):
         """
-        This view should return a list of all measurement for the currently authenticated user.
+        This view returns a list of all measurement for the currently authenticated user.
         """
         user = self.request.user
         return Measurement.objects.filter(user=user).order_by('-timestamp')
@@ -82,13 +98,23 @@ class UserViewSet(mixins.CreateModelMixin,
                   mixins.UpdateModelMixin,
                   mixins.ListModelMixin,
                   viewsets.GenericViewSet):
-    """ REST users.
-
-    A viewset for viewing and editing user instances.
-    """
+    """ Set of available users. """
     serializer_class = UserSerializer
     permission_classes = (IsAuthenticated,)
     queryset = User.objects.all()
+    # filter_backends = (filters.DjangoFilterBackend, filters_rest.SearchFilter)
+    # filter_fields = ('is_staff', 'username')
+    # search_fields = ('is_staff', 'username', "email")
+
+
+class RecommendationViewSet(mixins.CreateModelMixin,
+                  mixins.RetrieveModelMixin,
+                  mixins.ListModelMixin,
+                  viewsets.GenericViewSet):
+    """ Set of recommendations. """
+    serializer_class = RecommendationSerializer
+    permission_classes = (IsAuthenticated,)
+    queryset = Recommendation.objects.all()
     # filter_backends = (filters.DjangoFilterBackend, filters_rest.SearchFilter)
     # filter_fields = ('is_staff', 'username')
     # search_fields = ('is_staff', 'username', "email")

@@ -1,16 +1,18 @@
-* Sort data by timestamp
-* automatic refresh
+- Corporate Design
 
-* Deploy initial version
+- PUT data and GET data
+    - get recommendation for measurement (in REST API)
 
-- PUT data and GET data    
-    - get evaluation for measurement (recommendations)
-    - get evaluation for all measurements (recommendations)
+- Personalized message for report
 
+- Create real world data (model) & load data
 - Visualization of data for subjects
 - Visualization of normal ranges
-- Evaluation of measurements against normal ranges 
-- Evaluation of measurements against previous measurements
+
+
+- calculate evaluation for measurement (recommendations), uses the previous values
 - Trend of measurements, i.e. in which direction in the phase plane
-- Validators for models
+
+* fix automatic refresh (with work around)
+* coorporate design
 

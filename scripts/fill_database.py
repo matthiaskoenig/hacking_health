@@ -30,8 +30,10 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from collections import namedtuple
 from diabot.models import Measurement, MeasurementTypeChoices, TissueChoices
+from diabot.models import Recommendation
 from analysis import data_mock
 
+from diabot.models import rec_defs
 
 ################################################################################################################
 UserDef = namedtuple('UserDef', ['username', 'first_name', 'last_name', 'email', 'status'])
@@ -53,6 +55,18 @@ def create_superuser():
         user.last_name = "Matthias"
         user.first_name = "Koenig"
         user.save()
+
+
+def create_recommendations(rec_defs):
+    for rec_def in rec_defs:
+        # create recommendation
+        r = Recommendation(recommendation_id=uuid.uuid4(),
+                           status=rec_def.status,
+                           direction=rec_def.direction,
+                           intervention=rec_def.intervention,
+                           message=rec_def.message)
+        r.save()
+        print(r)
 
 
 def create_users(user_defs):
@@ -103,4 +117,5 @@ def add_measurements_for_user(user, status, N):
 if __name__ == "__main__":
     create_superuser()
     create_users(user_defs=user_defs)
+    create_recommendations(rec_defs=rec_defs)
 
