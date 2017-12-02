@@ -1,5 +1,6 @@
 * update README.md
     - Name and general information
+    - make public
 
 - PUT data and GET data
     - recommendations    
