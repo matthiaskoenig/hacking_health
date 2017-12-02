@@ -24,19 +24,21 @@ sys.path.append(PROJECT_DIR)
 # django setup
 import django
 django.setup()
+import uuid
 
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from collections import namedtuple
-from diabot.models import Measurement
+from diabot.models import Measurement, MeasurementTypeChoices, TissueChoices
+from analysis import data_mock
 
 
 ################################################################################################################
-UserDef = namedtuple('UserDef', ['username', 'first_name', 'last_name', 'email'])
+UserDef = namedtuple('UserDef', ['username', 'first_name', 'last_name', 'email', 'status'])
 user_defs = [
-    UserDef("normal", "Person", "Normal", "normal@diabot.de"),
-    UserDef("igt", "Person", "IGT", "igt@diabot.de"),
-    UserDef("t2dm", "Person", "T2DM", "t2dm@diabot.de"),
+    UserDef("person_healthy", "Person", "Normal", "normal@diabot.de", "normal"),
+    UserDef("person_impaired", "Person", "IGT", "igt@diabot.de", "igt"),
+    UserDef("person_t2dm", "Person", "T2DM", "t2dm@diabot.de", "t2dm"),
 ]
 ################################################################################################################
 
@@ -61,35 +63,41 @@ def create_users(user_defs):
         try:
             user = User.objects.get(username=user_def.username)
         except ObjectDoesNotExist:
+            # creates the user
             user = User.objects.create_user(username=user_def.username, email=user_def.email,
                                             password=DEFAULT_USER_PASSWORD)
             user.last_name = user_def.last_name
             user.first_name = user_def.first_name
             user.save()
-            print(user)
+
+            # creates example data
+            add_measurements_for_user(user=user, status=user_def.status, N=10)
 
 
-def add_measurements_to_database():
+def add_measurements_for_user(user, status, N):
     """ Adds example measurement to database
 
     :return:
     """
-    # normal measurements
-    Nm = 10
-    for username in ["normal", "igt", "t2dm"]:
-        user = User.objects.get(username=username)
-        glc = np.random.rand(10)
-        ins = np.random.rand(10)
-        for k in range(Nm):
+    # create some mocked data for the subjects
+    print("*** {} ***".format(user))
+    samples = data_mock.create_samples(status=status, N=N)
+
+    sensor_batch_id = uuid.uuid4()
+    for sample in samples:
+            measurement_id = uuid.uuid4()
             m = Measurement(user=user,
-                            measurement_id=k,
-                            sensor_batch_id=1,
-                            glucose=glc[k],
-                            insulin=ins[k])
+                            measurement_id=measurement_id,
+                            sensor_batch_id=sensor_batch_id,
+                            glucose=sample.glc,
+                            insulin=sample.ins,
+                            mtype=MeasurementTypeChoices.SINGLE,
+                            tissue=TissueChoices.SALVIA)
             m.save()
+            print("\t", m)
 
 
 if __name__ == "__main__":
     create_superuser()
     create_users(user_defs=user_defs)
-    add_measurements_to_database()
+

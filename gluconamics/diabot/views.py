@@ -14,4 +14,4 @@ def index_view(request):
 
 
 def about_view(request):
-    return render(request, "flutype/about.html", {})
+    return render(request, "gluconamics/about.html", {})
