@@ -1,13 +1,14 @@
 from django.shortcuts import render
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from .models import Measurement
 
 from rest_framework.generics import (ListCreateAPIView,RetrieveUpdateDestroyAPIView)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 
-from .serializers import MeasurementSerializer
+from .serializers import MeasurementSerializer, UserSerializer
 
 ##########################################
 # Main views

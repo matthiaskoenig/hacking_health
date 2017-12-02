@@ -10,16 +10,14 @@ from rest_framework_swagger.views import get_swagger_view
 
 from . import views
 
-from gluconamics import
-
-# schema_view = get_schema_view(title='Tellurium Web API')  # Django rest framework
-schema_view = get_swagger_view(title='API')  # Swagger
+schema_view = get_schema_view(title='API')  # Django rest framework
+# schema_view = get_swagger_view(title='API')  # Swagger
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet, base_name='user')
-router.register(r'measurments', views.MeasurementViewSet, base_name='tag')
+router.register(r'measurements', views.MeasurementViewSet, base_name='measurement')
 
 urlpatterns = [
-    url(r'^$', schema_view),
+    url(r'^$', schema_view, name="api"),
 ]
 urlpatterns += router.urls

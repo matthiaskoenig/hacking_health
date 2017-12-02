@@ -32,7 +32,6 @@
 
     <!-- HEAD -->
     {% block head %}{% endblock %}
-
 </head>
 <body>
 <nav id="main-navbar" class="navbar navbar-inverse navbar-fixed-top">
@@ -69,6 +68,9 @@
                             <i class="fa fa-fw fa-sign-in"></i> Login</a>
                     </li>
                 {% endif %}
+                <li>
+                    <a href="{{ url('api:api') }}" title="REST API"><i class="fa fa-fw fa-cogs"></i> API</a>
+                </li>
                 {% if request.user.is_superuser %}
                     <li>
                         <a href="{{ url("admin:index") }}" target="_blank" title="Admin interface">
