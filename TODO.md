@@ -1,7 +1,10 @@
-* Sort data by timestamp
-* automatic refresh
 
-* Deploy initial version
+* update API documentation
+* update README.md
+
+* fix automatic refresh (with work around)
+* fix symbol for data
+* coorporate design
 
 - PUT data and GET data    
     - get evaluation for measurement (recommendations)
