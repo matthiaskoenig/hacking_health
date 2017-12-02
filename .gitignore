@@ -1,7 +1,5 @@
 *.pyc
 *~
 .idea
-.gitignore
 docs/.ipynb_checkpoints/
-static
 gluconamics/deploy_settings.py
