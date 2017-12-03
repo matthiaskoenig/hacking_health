@@ -1,3 +1,4 @@
+{% import 'gluconamics/macros.html' as macros %}
 {% extends "gluconamics/base.html" %}
 
 {% block head %}
@@ -31,7 +32,7 @@
                 <th data-sortable="true">timestamp</th>
                 <th data-sortable="true">glucose [mM]</th>
                 <th data-sortable="true">insulin [pM]</th>
-                <th data-sortable="true">evaluation</th>
+                <th data-sortable="true">status</th>
             </tr>
             </thead>
             <tbody>
@@ -43,11 +44,8 @@
                 -->
                 <td>{{ m.timestamp.strftime('%Y-%m-%d %I:%M') }}</td>
                 <td>{{ '%.2f' % m.glucose }}</td>
-                <td>{{ '%.2f' %m.insulin }}</td>
-                <td>{% if m.evaluation=="SUCCESS" %}
-                    <span class="label label-success"><i class="fa fa-fw fa-check-circle"></i></span>
-                    {% endif %}
-                </td>
+                <td>{{ '%.2f' % m.insulin }}</td>
+                <td>{{ macros.t2dm_status(m.t2dm_status) }}</td>
             </tr>
             {% endfor %}
             </tbody>
@@ -120,6 +118,17 @@
 
     };
 
+    var contour = {
+      x: {{ glc }},
+      y: {{ ins }},
+      name: 'density',
+      ncontours: 10,
+      colorscale: 'Hot',
+      reversescale: true,
+      showscale: false,
+      type: 'histogram2dcontour'
+    };
+
     var layout = {
       xaxis: {
         title: 'glucose [mM]',
@@ -137,7 +146,7 @@
 
 
 
-    var data = [area_t2dm, area_igt, area_normal, trace1, trace2];
+    var data = [area_t2dm, area_igt, area_normal, contour, trace1, trace2];
 
     Plotly.newPlot('glc_ins_plot', data, layout);
 
