@@ -22,7 +22,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ['url', 'username', 'first_name', 'last_name', 'email']
+        fields = ['id', 'url', 'username', 'first_name', 'last_name', 'email']
 
 
 class RecommendationSerializer(serializers.ModelSerializer):
@@ -30,4 +30,4 @@ class RecommendationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recommendation
-        fields = ['status', 'direction', 'intervention', 'message']
+        fields = ['id', 'recommendation_id', 'status', 'direction', 'intervention', 'message']
