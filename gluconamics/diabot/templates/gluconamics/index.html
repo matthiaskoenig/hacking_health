@@ -73,8 +73,8 @@
         name: 'recent',
         text: ['A', 'B', 'C', 'D'],
         marker: {
-            color: '#FFB74D',
-            size: 15
+            color: 'black',
+            size: 20
         }
     };
 
@@ -97,7 +97,8 @@
         fill: 'tozeroy',
         type: 'scatter',
         mode: 'none',
-        name: 'T2DM'
+        name: 'T2DM',
+        fillcolor: 'rgba(255,0,0,0.3)'
     };
 
     var area_igt = {
@@ -106,7 +107,8 @@
         fill: 'tonexty',
         type: 'scatter',
         mode: 'none',
-        name: 'IGT'
+        name: 'IGT',
+        fillcolor: 'rgba(255,156,0,0.3)'
     };
 
     var area_normal = {
@@ -116,21 +118,8 @@
         type: 'scatter',
         mode: 'none',
         name: 'normal',
-    };
+        fillcolor: 'rgba(0,128,0,0.3)'
 
-    var layout = {
-     xaxis: {
-        title: 'glucose [mM]',
-        showgrid: false,
-        zeroline: false,
-          range: [0, 15]
-      },
-      yaxis: {
-        title: 'insulin [pM]',
-        showline: false,
-          showgrid: false,
-          range: [0, 800]
-      }
     };
 
     var layout = {
@@ -138,7 +127,7 @@
         title: 'glucose [mM]',
         showgrid: false,
         zeroline: false,
-          range: [0, 15]
+          range: [0, 20]
       },
       yaxis: {
         title: 'insulin [pM]',
