@@ -21,6 +21,7 @@ def index_view(request):
     measurements = Measurement.objects.filter(user=request.user).order_by('-timestamp')
     context = {
         'measurements': measurements,
+        'user': request.user,
     }
     return render(request, 'gluconamics/index.html', context)
 
@@ -56,9 +57,9 @@ def user_view(request, user_id):
     measurements = Measurement.objects.filter(user=user).order_by('-timestamp')
     context = {
         'measurements': measurements,
+        'user': user,
     }
     return render(request, 'gluconamics/index.html', context)
-
 
 
 def about_view(request):

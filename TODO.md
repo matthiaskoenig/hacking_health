@@ -1,7 +1,7 @@
 - Visualization of data for subjects
-- Visualization of normal ranges
-
 - Create real world data (model) & load data
+- fit contours of data
+- show evaluation
 
 
 - get recommendation for measurement (in REST API)
