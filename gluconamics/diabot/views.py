@@ -63,9 +63,9 @@ def user_view(request, user_id):
         'ins': ins,
     }
     if len(glc) > 0:
-        context['glc_new'] = [glc[-1]]
-        context['ins_new'] = [ins[-1]]
-        context['time_new'] = [time[-1]]
+        context['glc_new'] = [glc[0]]
+        context['ins_new'] = [ins[0]]
+        context['time_new'] = [time[0]]
 
     return render(request, 'gluconamics/index.html', context)
 
