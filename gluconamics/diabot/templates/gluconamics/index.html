@@ -91,7 +91,47 @@
         }
     };
 
-    var data = [trace1, trace2];
+    var area_t2dm = {
+        x: [0, 20],
+        y: [0, 300],
+        fill: 'tozeroy',
+        type: 'scatter',
+        mode: 'none',
+        name: 'T2DM'
+    };
+
+    var area_igt = {
+        x: [0, 20],
+        y: [0, 800],
+        fill: 'tonexty',
+        type: 'scatter',
+        mode: 'none',
+        name: 'IGT'
+    };
+
+    var area_normal = {
+        x: [0, 20],
+        y: [0, 2000],
+        fill: 'tonexty',
+        type: 'scatter',
+        mode: 'none',
+        name: 'normal',
+    };
+
+    var layout = {
+     xaxis: {
+        title: 'glucose [mM]',
+        showgrid: false,
+        zeroline: false,
+          range: [0, 15]
+      },
+      yaxis: {
+        title: 'insulin [pM]',
+        showline: false,
+          showgrid: false,
+          range: [0, 800]
+      }
+    };
 
     var layout = {
       xaxis: {
@@ -108,7 +148,10 @@
       }
     };
 
+    var data = [area_t2dm, area_igt, area_normal, trace1, trace2];
+
     Plotly.newPlot('glc_ins_plot', data, layout);
+
 </script>
 {% endif %}
 {% endblock %}
