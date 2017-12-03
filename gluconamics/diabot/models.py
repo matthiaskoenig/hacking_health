@@ -93,7 +93,7 @@ rec_defs = [
     RecDef(rid="R01", status=StatusChoices.GOOD, direction=DirectionChoices.CONSTANT, intervention=InterventionChoices.MISC,
            message="Hey mate, you are absolutely great. The levels are fine. Your diet and workout did wonders for your sugar levels. Keep it up buddy."),
     RecDef(rid="R02", status=StatusChoices.GOOD, direction=DirectionChoices.IMPROVING, intervention=InterventionChoices.MISC,
-           message="Your diet changes did wonders for your sugar levels. You are top of the class."),
+           message="Big improvements. You are top of the class!"),
     RecDef(rid="R03", status=StatusChoices.GOOD, direction=DirectionChoices.WORSENING, intervention=InterventionChoices.MISC,
            message="Your values decreased from the last measurement. Why not try to take the steps instead of elevators the next weeks?"),
 
