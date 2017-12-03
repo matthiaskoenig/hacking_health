@@ -2,6 +2,17 @@
 Definition of reusable macro function in templates
 -->
 
+<!-- T2DM Status -->
+{% macro t2dm_status(status) %}
+{% if status == "normal" %}
+    <span class="label label-success">{{ status }}</span>
+{% elif status == "igt" %}
+    <span class="label label-warning">{{ status }}</span>
+{% elif status == "t2dm" %}
+    <span class="label label-danger">{{ status }}</span>
+{% endif %}
+{% endmacro %}
+
 <!-- Status -->
 {% macro status(status) %}
 {% if status == "good" %}

@@ -18,11 +18,7 @@ from .serializers import MeasurementSerializer, UserSerializer, RecommendationSe
 ##########################################
 @login_required
 def index_view(request):
-    measurements = Measurement.objects.filter(user=request.user).order_by('-timestamp')
-    context = {
-        'measurements': measurements,
-    }
-    return render(request, 'gluconamics/index.html', context)
+    return user_view(request, user_id=request.user.pk)
 
 @login_required
 def recommendations_view(request):
@@ -54,11 +50,22 @@ def users_view(request):
 def user_view(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     measurements = Measurement.objects.filter(user=user).order_by('-timestamp')
+    time = [m.timestamp.strftime('%Y-%m-%d %I:%M') for m in measurements]
+    glc = [m.glucose for m in measurements]
+    ins = [m.insulin for m in measurements]
     context = {
         'measurements': measurements,
+        'user': user,
+        'time': time,
+        'glc': glc,
+        'ins': ins,
     }
-    return render(request, 'gluconamics/index.html', context)
+    if len(glc) > 0:
+        context['glc_new'] = [glc[-1]]
+        context['ins_new'] = [ins[-1]]
+        context['time_new'] = [time[-1]]
 
+    return render(request, 'gluconamics/index.html', context)
 
 
 def about_view(request):

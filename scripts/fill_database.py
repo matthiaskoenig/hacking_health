@@ -38,10 +38,12 @@ from diabot.models import rec_defs
 ################################################################################################################
 UserDef = namedtuple('UserDef', ['username', 'first_name', 'last_name', 'email', 'status'])
 user_defs = [
-    UserDef("person_healthy", "Person", "Normal", "normal@diabot.de", "normal"),
-    UserDef("person_impaired", "Person", "IGT", "igt@diabot.de", "igt"),
-    UserDef("person_t2dm", "Person", "T2DM", "t2dm@diabot.de", "t2dm"),
-    UserDef("test_user", "Test", "user", "test@diabot.de", "normal"),
+    UserDef("jon", "Jon", "Doe", "jon@dbt.de", "t2dm"),
+    UserDef("mary", "Mary", "Jane", "mary@dbt.de", "igt"),
+    UserDef("healthy", "Person", "Normal", "normal@dbt.de", "normal"),
+    UserDef("igt", "Person", "IGT", "igt@dbt.de", "igt"),
+    UserDef("t2dm", "Person", "T2DM", "t2dm@dbt.de", "t2dm"),
+    UserDef("test_user", "Test", "User", "test@dbt.de", "normal"),
 ]
 ################################################################################################################
 
@@ -55,6 +57,9 @@ def create_superuser():
         user.last_name = "Matthias"
         user.first_name = "Koenig"
         user.save()
+
+        # creates example data
+        add_measurements_for_user(user=user, status="normal", N=10)
 
 
 def create_recommendations(rec_defs):
@@ -102,20 +107,20 @@ def add_measurements_for_user(user, status, N):
 
     sensor_batch_id = uuid.uuid4()
     for sample in samples:
-            measurement_id = uuid.uuid4()
-            m = Measurement(user=user,
-                            measurement_id=measurement_id,
-                            sensor_batch_id=sensor_batch_id,
-                            glucose=sample.glc,
-                            insulin=sample.ins,
-                            mtype=MeasurementTypeChoices.SINGLE,
-                            tissue=TissueChoices.SALVIA)
-            m.save()
-            print("\t", m)
+        measurement_id = uuid.uuid4()
+        m = Measurement(user=user,
+                        measurement_id=measurement_id,
+                        sensor_batch_id=sensor_batch_id,
+                        glucose=sample.glc,
+                        insulin=sample.ins,
+                        mtype=MeasurementTypeChoices.SINGLE,
+                        tissue=TissueChoices.SALVIA)
+        m.save()
+        print("\t", m)
 
 
 if __name__ == "__main__":
-    create_superuser()
     create_users(user_defs=user_defs)
+    create_superuser()
     create_recommendations(rec_defs=rec_defs)
 

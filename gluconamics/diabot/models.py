@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 # Create your models here.
 from djchoices import DjangoChoices, ChoiceItem
 
+M_CUT_IGT = 40
+M_CUT_T2DM = 15
 
 # ===============================================================================
 # Models
@@ -39,9 +41,14 @@ class Measurement(models.Model):
         return '<Measurement: %s %s [glc=%f [mM], ins=%f [pM]>' % (self.user, self.measurement_id, self.glucose, self.insulin)
 
     @property
-    def evaluation(self):
-        return "SUCCESS"
-
+    def t2dm_status(self):
+        value = 1.0*self.insulin/self.glucose
+        if value > M_CUT_IGT:
+            return "normal"
+        elif value < M_CUT_T2DM:
+            return "t2dm"
+        else:
+            return "igt"
 
 class StatusChoices(DjangoChoices):
     GOOD = ChoiceItem("good")

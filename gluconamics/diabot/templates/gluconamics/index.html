@@ -1,3 +1,4 @@
+{% import 'gluconamics/macros.html' as macros %}
 {% extends "gluconamics/base.html" %}
 
 {% block head %}
@@ -8,53 +9,148 @@
 
 {% block content %}
 
-<h1><i class="fa fa-fw fa-line-chart"></i> My Data (<i class="fa fa-fw fa-user"></i> {{ request.user }} )</h1>
+<h1><i class="fa fa-fw fa-line-chart"></i> My Data (<i class="fa fa-fw fa-user"></i> {{ user }} )</h1>
 
-{% if measurements %}
-    <table id="measurements_table"
-            class="table table-striped"
-            data-toggle="table"
-            data-pagination="true"
-            data-search="true"
-            data-show-toggle="true"
-            data-show-columns="true"
-            data-toolbar="#toolbar">
-        <thead>
-        <tr>
-            <!--
-            <th data-sortable="true">measurement</th>
-            <th data-sortable="true">sensor</th>
-            -->
-            <th data-sortable="true">timestamp</th>
-            <th data-sortable="true">glucose [mM]</th>
-            <th data-sortable="true">insulin [pM]</th>
-            <th data-sortable="true">evaluation</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for m in measurements %}
+<div class="row">
+    <div class="col-sm-6">
+
+        {% if measurements %}
+        <table id="measurements_table"
+               class="table table-striped"
+               data-toggle="table"
+               data-pagination="true"
+               data-search="true"
+               data-show-toggle="true"
+               data-show-columns="true"
+               data-toolbar="#toolbar">
+            <thead>
+            <tr>
+                <!--
+                <th data-sortable="true">measurement</th>
+                <th data-sortable="true">sensor</th>
+                -->
+                <th data-sortable="true">timestamp</th>
+                <th data-sortable="true">glucose [mM]</th>
+                <th data-sortable="true">insulin [pM]</th>
+                <th data-sortable="true">status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for m in measurements %}
             <tr>
                 <!--
                 <td>{{ m.measurement_id }}</td>
                 <td>{{ m.sensor_batch_id }}</td>
                 -->
                 <td>{{ m.timestamp.strftime('%Y-%m-%d %I:%M') }}</td>
-                <td>{{ '%.3f' % m.glucose }}</td>
-                <td>{{ '%.3f' %m.insulin }}</td>
-                <td>{% if m.evaluation=="SUCCESS" %}
-                    <span class="label label-success"><i class="fa fa-fw fa-check-circle"></i></span>
-                    {% endif %}
-                </td>
+                <td>{{ '%.2f' % m.glucose }}</td>
+                <td>{{ '%.2f' % m.insulin }}</td>
+                <td>{{ macros.t2dm_status(m.t2dm_status) }}</td>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-{% else %}
-    <p>No entries in database.</p>
-{% endif %}
-
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No entries in database.</p>
+        {% endif %}
+    </div>
+    <div class="col-sm-6">
+        <div id="glc_ins_plot" style="width:600px;height:600px;"></div>
+    </div>
+</div>
 {% endblock %}
 
 {% block javascript %}
+{% if measurements %}
+<script>
+    var trace1 = {
+        x: {{ glc }},
+        y: {{ ins }},
+        mode: 'markers',
+        type: 'scatter',
+        name: 'recent',
+        marker: {
+            color: 'black',
+            size: 20
+        }
+    };
+
+    var trace2 = {
+        x: {{ glc_new }},
+        y: {{ ins_new }},
+        mode: 'markers',
+        type: 'scatter',
+        name: 'new',
+        marker: {
+            color: '#4BA3C7',
+            size: 30,
+        }
+    };
+
+    var area_t2dm = {
+        x: [0, 20],
+        y: [0, 300],
+        fill: 'tozeroy',
+        type: 'scatter',
+        mode: 'none',
+        name: 'T2DM',
+        fillcolor: 'rgba(255,0,0,0.3)'
+    };
+
+    var area_igt = {
+        x: [0, 20],
+        y: [0, 800],
+        fill: 'tonexty',
+        type: 'scatter',
+        mode: 'none',
+        name: 'IGT',
+        fillcolor: 'rgba(255,156,0,0.3)'
+    };
+
+    var area_normal = {
+        x: [0, 20],
+        y: [0, 2000],
+        fill: 'tonexty',
+        type: 'scatter',
+        mode: 'none',
+        name: 'normal',
+        fillcolor: 'rgba(0,128,0,0.3)'
+
+    };
+
+    var contour = {
+      x: {{ glc }},
+      y: {{ ins }},
+      name: 'density',
+      ncontours: 10,
+      colorscale: 'Hot',
+      reversescale: true,
+      showscale: false,
+      type: 'histogram2dcontour'
+    };
+
+    var layout = {
+      xaxis: {
+        title: 'glucose [mM]',
+        showgrid: false,
+        zeroline: false,
+          range: [0, 20]
+      },
+      yaxis: {
+        title: 'insulin [pM]',
+        showline: false,
+          showgrid: false,
+          range: [0, 800]
+      }
+    };
+
+
+
+    var data = [area_t2dm, area_igt, area_normal, contour, trace1, trace2];
+
+    Plotly.newPlot('glc_ins_plot', data, layout);
+
+</script>
+{% endif %}
 {% endblock %}
 
