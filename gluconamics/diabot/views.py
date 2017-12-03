@@ -53,8 +53,10 @@ def user_view(request, user_id):
     time = [m.timestamp.strftime('%Y-%m-%d %I:%M') for m in measurements]
     glc = [m.glucose for m in measurements]
     ins = [m.insulin for m in measurements]
+    recommendations = [Recommendation.objects.all()[0]]
     context = {
         'measurements': measurements,
+        'recommendations': recommendations,
         'user': user,
         'time': time,
         'glc': glc,

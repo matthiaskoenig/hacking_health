@@ -65,7 +65,7 @@ def create_superuser():
 def create_recommendations(rec_defs):
     for rec_def in rec_defs:
         # create recommendation
-        r = Recommendation(recommendation_id=uuid.uuid4(),
+        r = Recommendation(recommendation_id=rec_def.rid,
                            status=rec_def.status,
                            direction=rec_def.direction,
                            intervention=rec_def.intervention,
