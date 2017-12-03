@@ -19,8 +19,7 @@ def __factory_random(status, N):
     glc_igt = [3.8, 14.0]
     glc_t2dm = [3.3, 19.0]
 
-
-    f_std = 0.1
+    f_std = 0.3
 
     samples = []
     glc_rand = np.random.rand(N)
@@ -40,7 +39,7 @@ def __factory_random(status, N):
 
 
         glc = glc_min + glc_rand[k] * (glc_max - glc_min)
-        ins = m_normal * glc + np.random.normal(loc=0, scale=f_std * m * glc)
+        ins = m*glc + np.random.normal(loc=0, scale=f_std * m * glc)
 
         samples.append(
             SampleData(ins=ins, glc=glc)

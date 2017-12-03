@@ -42,8 +42,8 @@
                 <td>{{ m.sensor_batch_id }}</td>
                 -->
                 <td>{{ m.timestamp.strftime('%Y-%m-%d %I:%M') }}</td>
-                <td>{{ '%.3f' % m.glucose }}</td>
-                <td>{{ '%.3f' %m.insulin }}</td>
+                <td>{{ '%.2f' % m.glucose }}</td>
+                <td>{{ '%.2f' %m.insulin }}</td>
                 <td>{% if m.evaluation=="SUCCESS" %}
                     <span class="label label-success"><i class="fa fa-fw fa-check-circle"></i></span>
                     {% endif %}
@@ -66,12 +66,11 @@
 {% if measurements %}
 <script>
     var trace1 = {
-        x: [1, 2, 3, 4],
-        y: [10, 15, 13, 17],
+        x: {{ glc }},
+        y: {{ ins }},
         mode: 'markers',
         type: 'scatter',
         name: 'recent',
-        text: ['A', 'B', 'C', 'D'],
         marker: {
             color: 'black',
             size: 20
@@ -79,12 +78,11 @@
     };
 
     var trace2 = {
-        x: [2],
-        y: [16],
+        x: {{ glc_new }},
+        y: {{ ins_new }},
         mode: 'markers',
         type: 'scatter',
         name: 'new',
-        text: ['E'],
         marker: {
             color: '#4BA3C7',
             size: 30,
@@ -136,6 +134,8 @@
           range: [0, 800]
       }
     };
+
+
 
     var data = [area_t2dm, area_igt, area_normal, trace1, trace2];
 

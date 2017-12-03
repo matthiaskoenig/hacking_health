@@ -59,6 +59,27 @@
                     <li>
                         <a href="{{ url('index') }}" title="My Data"><i class="fa fa-fw fa-line-chart"></i> My Data</a>
                     </li>
+                    <li>
+                        <a href="{{ url('users') }}" title="Users"><i class="fa fa-fw fa-users"></i> Users</a>
+                    </li>
+                    <li>
+                        <a href="{{ url('recommendations') }}" title="Recommendations"><i class="fa fa-fw fa-comments"></i> Recommendations</a>
+                    </li>
+                    <li>
+                        <a href="{{ url('api:api') }}" title="REST API" target="_blank"><i class="fa fa-fw fa-cogs"></i> API</a>
+                    </li>
+                {% endif %}
+
+                {% if request.user.is_superuser %}
+                    <li>
+                        <a href="{{ url("admin:index") }}" target="_blank" title="Admin interface">
+                            <i class="fa fa-server fa-fw"></i> Admin</a>
+                    </li>
+                {% endif %}
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.user.is_authenticated %}
                     <li class="dropdown">
                         <a data-toggle="dropdown" role="button" aria-expanded="false"><i
                                 class="fa fa-fw fa-user"></i> {{ request.user.get_username() }}<span class="caret"></span></a>
@@ -69,31 +90,12 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="{{ url('users') }}" title="Users"><i class="fa fa-fw fa-users"></i> Users</a>
-                    </li>
-                    <li>
-                        <a href="{{ url('recommendations') }}" title="Recommendations"><i class="fa fa-fw fa-comments"></i> Recommendations</a>
-                    </li>
                 {% else %}
                     <li>
                         <a href="{{ url('login') }}?next={{ request.path }}" title="Login to get access to the database">
                             <i class="fa fa-fw fa-sign-in"></i> Login</a>
                     </li>
                 {% endif %}
-
-                <li>
-                    <a href="{{ url('api:api') }}" title="REST API" target="_blank"><i class="fa fa-fw fa-cogs"></i> API</a>
-                </li>
-                {% if request.user.is_superuser %}
-                    <li>
-                        <a href="{{ url("admin:index") }}" target="_blank" title="Admin interface">
-                            <i class="fa fa-server fa-fw"></i> Admin</a>
-                    </li>
-                {% endif %}
-            </ul>
-
-            <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a href="{{ url('about') }}" title="Description"><i class="fa fa-info fa-fw"></i> About</a>
                 </li>
