@@ -53,17 +53,19 @@ def user_view(request, user_id):
     time = [m.timestamp.strftime('%Y-%m-%d %I:%M') for m in measurements]
     glc = [m.glucose for m in measurements]
     ins = [m.insulin for m in measurements]
+    recommendations = [Recommendation.objects.get(recommendation_id="R02")]
     context = {
         'measurements': measurements,
+        'recommendations': recommendations,
         'user': user,
         'time': time,
         'glc': glc,
         'ins': ins,
     }
     if len(glc) > 0:
-        context['glc_new'] = [glc[-1]]
-        context['ins_new'] = [ins[-1]]
-        context['time_new'] = [time[-1]]
+        context['glc_new'] = [glc[0]]
+        context['ins_new'] = [ins[0]]
+        context['time_new'] = [time[0]]
 
     return render(request, 'gluconamics/index.html', context)
 

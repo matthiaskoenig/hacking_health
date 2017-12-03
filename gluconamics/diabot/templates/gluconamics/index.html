@@ -2,18 +2,19 @@
 {% extends "gluconamics/base.html" %}
 
 {% block head %}
+
 <!--
-<meta http-equiv="refresh" content="4" >
+<meta http-equiv="refresh" content="3" >
 -->
 {% endblock %}
 
 {% block content %}
 
-<h1><i class="fa fa-fw fa-line-chart"></i> My Data (<i class="fa fa-fw fa-user"></i> {{ user }} )</h1>
+<h1><i class="fa fa-fw fa-line-chart"></i> My Data {{ macros.user(user) }}</h1>
 
 <div class="row">
     <div class="col-sm-6">
-
+        <!-- Measurements -->
         {% if measurements %}
         <table id="measurements_table"
                class="table table-striped"
@@ -29,7 +30,7 @@
                 <th data-sortable="true">measurement</th>
                 <th data-sortable="true">sensor</th>
                 -->
-                <th data-sortable="true">timestamp</th>
+                <th data-sortable="true">date</th>
                 <th data-sortable="true">glucose [mM]</th>
                 <th data-sortable="true">insulin [pM]</th>
                 <th data-sortable="true">status</th>
@@ -51,13 +52,51 @@
             </tbody>
         </table>
         {% else %}
-        <p>No entries in database.</p>
+        <p>No measurements for {{ user }} in Dbt.</p>
         {% endif %}
     </div>
     <div class="col-sm-6">
         <div id="glc_ins_plot" style="width:600px;height:600px;"></div>
     </div>
 </div>
+<div class="row">
+     <div class="col-sm-6">
+        <h1><i class="fa fa-fw fa-comments"></i> My Recommendations</h1>
+        <!-- Recommendations -->
+        {% if recommendations %}
+        <table id="recommendations_table"
+                class="table table-striped"
+                data-toggle="table"
+                data-pagination="true"
+                data-search="true"
+                data-show-toggle="true"
+                data-show-columns="true"
+                data-toolbar="#toolbar"
+                data-page-size="25">
+            <thead>
+            <tr>
+                <th data-sortable="true">direction</th>
+                <th data-sortable="true">intervention</th>
+                <th data-sortable="true">message</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for r in recommendations %}
+                <tr>
+                    <td>{{ macros.direction(r.direction) }}</td>
+                    <td>{{ macros.intervention(r.intervention) }}</td>
+                    <td>{{ macros.message(r.message) }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No recommendations for {{ macros.user(user)}} in Dbt.</p>
+        {% endif %}
+    </div>
+</div>
+
+
 {% endblock %}
 
 {% block javascript %}

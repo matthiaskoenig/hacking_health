@@ -21,6 +21,7 @@
             <th data-sortable="true">measurement</th>
             <th data-sortable="true">sensor</th>
             -->
+            <th data-sortable="true">recommendation_id</th>
             <th data-sortable="true">status</th>
             <th data-sortable="true">direction</th>
             <th data-sortable="true">intervention</th>
@@ -30,16 +31,17 @@
         <tbody>
         {% for r in recommendations %}
             <tr>
+                <td>{{ r.recommendation_id }}</td>
                 <td>{{ macros.status(r.status) }}</td>
                 <td>{{ macros.direction(r.direction) }}</td>
                 <td>{{ macros.intervention(r.intervention) }}</td>
-                <td>{{ r.message }}</td>
+                <td>{{ macros.message(r.message) }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 {% else %}
-    <p>No entries in database.</p>
+    <p>No recommendations in Dbt.</p>
 {% endif %}
 
 {% endblock %}

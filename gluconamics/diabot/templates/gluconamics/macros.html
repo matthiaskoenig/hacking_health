@@ -49,3 +49,10 @@ Definition of reusable macro function in templates
 {{ value }}
 {% endmacro %}
 
+{% macro message(text) %}
+<i class="fa fa-fw fa-quote-left"></i> {{ text }} <i class="fa fa-fw fa-quote-right"></i>
+{% endmacro %}
+
+{% macro user(user) %}
+<span class="label label-primary"><i class="fa fa-fw fa-user"></i> {{ user }}</span>
+{% endmacro %}
