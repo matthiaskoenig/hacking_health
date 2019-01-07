@@ -18,3 +18,6 @@ mkvirtualenv hackhealth --python=python3
 
 (hackhealth) python -m ipykernel install --user --name=hackhealth
 ```
+
+----
+&copy; 2017-2018 Matthias König.
