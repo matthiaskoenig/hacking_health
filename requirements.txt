@@ -1,5 +1,5 @@
 
-django==1.11.11
+django==1.11.18
 django-pandas>=0.5.2
 django-choices>=1.6.1
 django-filter>=2.0.0
